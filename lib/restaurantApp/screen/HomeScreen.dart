@@ -31,7 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
             Text("Restaurant"),
             Text("Recommendation restaurant for you!", style: TextStyle(fontSize: 14),)
           ],
-        )
+        ),
+        actions: [
+          IconButton(onPressed: () {
+            Navigator.pushNamed(context, "/searchScreen");
+          }, icon: Icon(Icons.search))
+        ],
       ),
       body: FutureBuilder<RestaurantHeader>(
         future: restaurantHeader,
