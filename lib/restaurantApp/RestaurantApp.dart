@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/restaurantApp/screen/DetailScreen.dart';
 import 'package:restaurant_app/restaurantApp/screen/HomeScreen.dart';
+import 'package:restaurant_app/restaurantApp/screen/SearchScreen.dart';
 
 import 'Styles.dart';
 void main() => runApp(const RestaurantApp());
@@ -31,7 +32,8 @@ class RestaurantApp extends StatelessWidget {
       routes: {
         "/": (context) =>  const HomeScreen(),
         "/detailScreen": (context) => DetailScreen(
-          restaurantId: ModalRoute.of(context)?.settings.arguments as String,)
+          restaurantId: ModalRoute.of(context)?.settings.arguments as String),
+        "/searchScreen": (context) => const SearchScreen()
       },
       // home: const FirstScreen(),
     );

@@ -25,10 +25,3 @@ class Restaurant {
     rating: restaurants['rating']?.toDouble(),
   );
 }
-
-/*
-List<Restaurant> parseRestaurant(String? json) {
-  if (json == null) return [];
-  final List parsed = jsonDecode(json)['restaurants'];
-  return parsed.map((json) => Restaurant.fromJson(json)).toList();
-}*/
