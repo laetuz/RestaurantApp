@@ -7,13 +7,13 @@ import '../api/ApiService.dart';
 class DetailController extends GetxController {
   final _apiService = ApiService();
 
-  final restaurantHeader = Rx<RestaurantDetail?>(null);
+  final restaurantDetail = Rx<RestaurantDetail?>(null);
   final errorMessage = Rx<String?>(null); // Observable for error
 
-  Future<RestaurantDetail?> fetchRestaurantHeader(String id) async {
+  Future<RestaurantDetail?> fetchRestaurantDetail(String id) async {
     try {
       final header = await _apiService.getDetail(id);
-      restaurantHeader.value = header;
+      restaurantDetail.value = header;
       errorMessage.value = null; // Clear any previous errors
       return header; // Return the fetched data
     } catch (e) {

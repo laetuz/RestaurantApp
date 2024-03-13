@@ -15,13 +15,16 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   late Future<RestaurantSearch> searchQuery;
+  final SearchStateController _searchController = Get.put(SearchStateController());
 
-  SearchStateController searchState = Get.put(SearchStateController());
+ // SearchStateController searchState = Get.put(SearchStateController());
 
   @override
   void initState() {
     super.initState();
-    searchQuery = ApiService().getSearch(searchState.query.value);
+    Get.delete<SearchStateController>();
+    _searchController.searchRestaurant(_searchController.query.value);
+    searchQuery = ApiService().getSearch(_searchController.query.value);
   }
 
   @override
@@ -69,9 +72,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                 borderRadius: BorderRadius.circular(40))),
                         onChanged: (String value) {
                           setState(() {
-                            searchState.query.value = value;
-                            print("searchsstate" + searchState.query.value);
-                            searchQuery = ApiService().getSearch(searchState.query.value);
+                            _searchController.query.value = value;
+                            print("searchsstate" + _searchController.query.value);
+                            searchQuery = ApiService().getSearch(_searchController.query.value);
                           });
                         },
                       ),
