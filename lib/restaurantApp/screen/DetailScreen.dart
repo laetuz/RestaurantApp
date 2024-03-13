@@ -30,7 +30,21 @@ class _DetailScreenState extends State<DetailScreen> {
           future: restaurantDetail,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Text(("Error: ${snapshot.error}"));
+              if (snapshot.error.runtimeType.toString() == "_ClientSocketException") {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Text("Device is offline. Please turn on Internet connection.", style: TextStyle(color: Colors.red),),
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Text("Device is offline. Please turn on Internet connection.", style: TextStyle(color: Colors.red),),
+                  ),
+                );
+              }
             } else if (snapshot.hasData) {
               final restaurant = snapshot.data!.restaurant;
               return SingleChildScrollView(
@@ -99,7 +113,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               );
             } else {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator(color: Colors.black));
             }
           }  ,
         )

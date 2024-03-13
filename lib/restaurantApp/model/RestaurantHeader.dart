@@ -1,4 +1,4 @@
-import 'package:restaurant_app/restaurantApp/Restaurant.dart';
+import 'package:restaurant_app/restaurantApp/model/Restaurant.dart';
 
 class RestaurantHeader {
   final bool error;
@@ -22,7 +22,4 @@ class RestaurantHeader {
         .toList(),
     );
   }
-
-/*=> RestaurantHeader(
-      error: error, message: message, count: count, restaurants: restaurants)*/
 }

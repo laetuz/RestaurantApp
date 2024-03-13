@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:restaurant_app/restaurantApp/data/api/ApiService.dart';
+import 'package:restaurant_app/restaurantApp/data/controller/SearchController.dart';
 import 'package:restaurant_app/restaurantApp/model/RestaurantSearch.dart';
 
 import '../../component/card/TileItemReview.dart';
@@ -14,16 +16,17 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   late Future<RestaurantSearch> searchQuery;
 
-  String inputQuery = "";
+  SearchStateController searchState = Get.put(SearchStateController());
 
   @override
   void initState() {
     super.initState();
-    searchQuery = ApiService().getSearch(inputQuery);
+    searchQuery = ApiService().getSearch(searchState.query.value);
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           title: Text("Search"),
@@ -32,8 +35,21 @@ class _SearchScreenState extends State<SearchScreen> {
             future: searchQuery,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                return Text(
-                    "Error: ${snapshot.error}"); // Handle error message (Widget)
+                if (snapshot.error.runtimeType.toString() == "_ClientSocketException") {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text("Device is offline. Please turn on Internet connection.", style: TextStyle(color: Colors.red),),
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text("Device is offline. Please turn on Internet connection.", style: TextStyle(color: Colors.red),),
+                    ),
+                  );
+                }
               } else if (snapshot.hasData) {
                 final restaurants = snapshot.data!.restaurants;
                 print("search neo: $restaurants");
@@ -53,8 +69,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                 borderRadius: BorderRadius.circular(40))),
                         onChanged: (String value) {
                           setState(() {
-                            inputQuery = value;
-                            searchQuery = ApiService().getSearch(inputQuery);
+                            searchState.query.value = value;
+                            print("searchsstate" + searchState.query.value);
+                            searchQuery = ApiService().getSearch(searchState.query.value);
                           });
                         },
                       ),
@@ -80,7 +97,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ],
                 );
               } else {
-                return CircularProgressIndicator(); // Show loading indicator (Widget)
+                return const Center(child: CircularProgressIndicator(color: Colors.black));
               }
             })
         );
