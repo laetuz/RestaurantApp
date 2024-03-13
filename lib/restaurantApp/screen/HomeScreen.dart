@@ -61,12 +61,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _widgetMain() {
     if (_homeController.restaurantHeader.value == null) {
-      return Center(
+      return const Center(
           child: CircularProgressIndicator(
               color: Colors
                   .black));
     } else if (_homeController.restaurantHeader.value!.restaurants.isEmpty) {
-      return Center(
+      return const Center(
         child: Text("No restaurants available"),
       );
     } else {

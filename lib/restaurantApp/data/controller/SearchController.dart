@@ -11,9 +11,9 @@ class SearchStateController extends GetxController {
   final restaurantSearch = Rx<RestaurantSearch?>(null);
   final errorMessage = Rx<String?>(null); // Observable for error
 
-  Future<RestaurantSearch?> searchRestaurant(String query) async {
+  Future<RestaurantSearch?> searchRestaurant() async {
     try {
-      final header = await _apiService.getSearch(query);
+      final header = await _apiService.getSearch(query.value);
       restaurantSearch.value = header;
       errorMessage.value = null; // Clear any previous errors
       return header; // Return the fetched data
